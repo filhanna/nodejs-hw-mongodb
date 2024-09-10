@@ -4,7 +4,7 @@ import pino from "pino-http";
 
 import { env } from "./utils/env.js";
 
-import ContactCollection from "./db/models/Contact.js";
+import * as contactServises from "./services/contacts.js";
 
 export const startServer = () => {
   const app = express();
@@ -19,10 +19,27 @@ export const startServer = () => {
   app.use(express.json());
 
   app.get("/contacts", async (req, res) => {
-    const data = await ContactCollection.find();
+    const data = await contactServises.getAllContacts();
     res.json({
       status: 200,
       message: "Successfully found contacts!",
+      data,
+    });
+  });
+
+  app.get("/contacts/:id", async (req, res) => {
+    const { id } = req.params;
+    const data = await contactServises.getContactById(id);
+
+    if (!data) {
+      return res.status(404).json({
+        message: `Contact with id=${id} not found`,
+      });
+    }
+
+    res.json({
+      status: 200,
+      message: `Contact with ${id} successfully find!`,
       data,
     });
   });
