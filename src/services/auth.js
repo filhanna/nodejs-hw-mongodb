@@ -8,6 +8,12 @@ import SessionCollection from "../db/models/Session.js";
 
 import UserCollection from "../db/models/User.js";
 
+import { sendResetPasswordEmail } from "./sendemail.js";
+
+import jwt from "jsonwebtoken";
+
+import { env } from "../utils/env.js";
+
 import {
   accessTokenLifetime,
   refreshTokenLifetime,
@@ -104,3 +110,46 @@ export const signout = async (sessionId) => {
 };
 
 export const findUser = (filter) => UserCollection.findOne(filter);
+
+export const sendEmailResetPassword = async (email) => {
+  const user = await UserCollection.findOne({ email });
+
+  if (!user) {
+    throw createHttpError(404, `User not found!`);
+  }
+  try {
+    await sendResetPasswordEmail(email);
+  } catch (error) {
+    console.error(error);
+    throw createHttpError(
+      500,
+      `Failed to send the email, please try again later.`
+    );
+  }
+};
+
+export const resetPasswordService = async (password, token) => {
+  const secretKey = env("JWT_SECRET");
+  try {
+    const decodedToken = jwt.verify(token, secretKey);
+    const email = decodedToken.email;
+
+    const user = await UserCollection.findOne({ email });
+    if (!user) {
+      throw createHttpError(404, `User not found!`);
+    }
+    const hashedPassword = bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    user.save();
+
+    await SessionCollection.deleteOne({ _id: user._id });
+  } catch (error) {
+    console.error(error);
+    if (
+      error.name === "TokenExpiredError" ||
+      error.name === "JsonWebTokenError"
+    ) {
+      return createHttpError(401, "Token is expired or invalid.");
+    }
+  }
+};
