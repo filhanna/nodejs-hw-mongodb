@@ -16,13 +16,13 @@ authRouter.post(
 );
 
 authRouter.post(
-  "/signin",
+  "/login",
   validateBody(userSigninSchema),
   ctrlWrapper(authControllers.signinController)
 );
 
 authRouter.post("/refresh", ctrlWrapper(authControllers.refreshController));
 
-authRouter.post("/signout", ctrlWrapper(authControllers.signoutController));
+authRouter.post("/logout", ctrlWrapper(authControllers.signoutController));
 
 export default authRouter;
