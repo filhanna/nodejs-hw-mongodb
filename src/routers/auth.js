@@ -10,7 +10,7 @@ import { userSignupSchema, userSigninSchema } from "../validation/users.js";
 const authRouter = Router();
 
 authRouter.post(
-  "/signup",
+  "/register",
   validateBody(userSignupSchema),
   ctrlWrapper(authControllers.signupController)
 );
