@@ -8,7 +8,7 @@ import SessionCollection from "../db/models/Session.js";
 
 import UserCollection from "../db/models/User.js";
 
-import { sendResetPasswordEmail } from "./sendemail.js";
+import { sendResetPasswordEmail } from "./sendEmail.js";
 
 import jwt from "jsonwebtoken";
 
