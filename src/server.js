@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import { env } from "./utils/env.js";
+// import { env } from "./utils/env.js";
 
 import notFoundHeandler from "./middlewares/notFoundHandler.js";
 import errorHandler from "./middlewares/errorHandler.js";
@@ -26,7 +26,7 @@ export const startServer = () => {
 
   app.use(errorHandler);
 
-  const port = Number(env("PORT", 3000));
+  // const port = Number(env("PORT", 3000));
 
-  app.listen(port, () => console.log("Server running on port 3000"));
+  app.listen(3000, () => console.log("Server running on port 3000"));
 };
