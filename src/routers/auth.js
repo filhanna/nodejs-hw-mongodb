@@ -21,7 +21,7 @@ authRouter.post(
 );
 
 authRouter.post(
-  "/signin",
+  "/login",
   validateBody(userSigninSchema),
   ctrlWrapper(authControllers.signinController)
 );
