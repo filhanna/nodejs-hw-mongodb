@@ -39,7 +39,7 @@ authRouter.post(
 authRouter.post(
   "/reset-pwd",
   validateBody(userResetPasswordSchema),
-  ctrlWrapper(authControllers.signinController)
+  ctrlWrapper(authControllers.resetPasswordController)
 );
 
 export default authRouter;

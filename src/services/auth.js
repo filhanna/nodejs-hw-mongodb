@@ -8,7 +8,7 @@ import SessionCollection from "../db/models/Session.js";
 
 import UserCollection from "../db/models/User.js";
 
-import { sendResetPasswordEmail } from "./sendEmail.js";
+import { sendResetPasswordEmail } from "./sendemail.js";
 
 import jwt from "jsonwebtoken";
 
@@ -133,12 +133,14 @@ export const resetPasswordService = async (password, token) => {
   try {
     const decodedToken = jwt.verify(token, secretKey);
     const email = decodedToken.email;
-
     const user = await UserCollection.findOne({ email });
     if (!user) {
       throw createHttpError(404, `User not found!`);
     }
-    const hashedPassword = bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("password:", password);
+    console.log("user.password:", user.password);
+    console.log("hashedPassword:", hashedPassword);
     user.password = hashedPassword;
     user.save();
 

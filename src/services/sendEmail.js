@@ -23,7 +23,7 @@ export const sendResetPasswordEmail = async (email) => {
   const resetUrl = `${frontendUrl}/resetPassword?token=${token}`;
 
   const mailOptions = {
-    from: "Support",
+    from: "Support <filimonenkohanna@gmail.com>",
     to: email,
     subject: "Reset your password",
     html: `<p>To reset your password, please click on the link below:</p>
