@@ -5,13 +5,13 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: API для управління контактами.
+  description: API for contact managment.
 tags:
   - name: Contacts
-    description: Операції з контактами
+    description: Operations with contacts
 servers:
   - url: http://localhost:3000
-  - url: https://<your-deployment-url>
+  - url: https://nodejs-hw-mongodb-d7uu.onrender.com/
 paths:
   /contacts/{id}:
     get:
