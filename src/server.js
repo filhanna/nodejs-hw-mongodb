@@ -1,6 +1,10 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
+import { readFileSync } from "fs";
+
+const swaggerDocument = JSON.parse(readFileSync("./docs/swagger.json", "utf8"));
 
 import { env } from "./utils/env.js";
 
@@ -19,6 +23,7 @@ export const startServer = () => {
   app.use(express.json());
   app.use(cookieParser());
 
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use("/auth", authRouter);
   app.use("/contacts", contactsRouter);
 
