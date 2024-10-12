@@ -146,12 +146,15 @@ export const resetPasswordService = async (password, token) => {
 
     await SessionCollection.deleteOne({ _id: user._id });
   } catch (error) {
-    console.error(error);
+    console.error(error.name);
+    console.log(
+      error.name === "TokenExpiredError" || error.name === "JsonWebTokenError"
+    );
     if (
       error.name === "TokenExpiredError" ||
       error.name === "JsonWebTokenError"
     ) {
-      return createHttpError(401, "Token is expired or invalid.");
+      throw createHttpError(401, "Token is expired or invalid.");
     }
   }
 };
