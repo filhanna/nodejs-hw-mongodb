@@ -6,7 +6,7 @@ import { generateResetToken } from "../utils/generateResetToken.js";
 
 export const sendResetPasswordEmail = async (email) => {
   const server = env("SMTPSERVER");
-  const port = env("PORT");
+  const port = env("SMTP_PORT");
   const masterPassword = env("MASTERPASSWORD");
   const login = env("LOGIN");
   const frontendUrl = env("APP_DOMAIN");
