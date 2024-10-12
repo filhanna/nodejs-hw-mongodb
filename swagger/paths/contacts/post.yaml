@@ -1,0 +1,34 @@
+tags:
+  - Contacts
+summary: Add a new contact
+operationId: addContact
+description: "Create a new contact for the authenticated user."
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: "../../components/schemas/contactAdd.yaml"
+responses:
+  "201":
+    description: "Successfully created a contact."
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a contact!
+            data:
+              type: object
+              $ref: "../../components/schemas/contact.yaml"
